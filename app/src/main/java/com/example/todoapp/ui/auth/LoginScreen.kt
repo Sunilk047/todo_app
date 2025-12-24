@@ -139,7 +139,7 @@ fun LoginScreen(
                             email,
                             password,
                             onSuccess = {
-                                navController.navigate(Routes.TODO_LIST) {
+                                navController.navigate(Routes.DASHBOARD) {
                                     popUpTo(Routes.LOGIN) { inclusive = true }
                                 }
                             },

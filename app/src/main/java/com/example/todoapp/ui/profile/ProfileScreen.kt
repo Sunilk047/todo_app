@@ -32,6 +32,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.todoapp.ui.theme.bluePrimary
 import com.example.todoapp.ui.theme.white
+import com.example.todoapp.viewmodel.AuthViewModel
 import com.example.todoapp.viewmodel.ProfileViewModel
 import kotlinx.coroutines.launch
 import java.io.File
@@ -40,7 +41,8 @@ import java.io.File
 @Composable
 fun ProfileScreen(
     navController: NavController,
-    viewModel: ProfileViewModel = hiltViewModel()
+    viewModel: ProfileViewModel = hiltViewModel(),
+    authViewModel: AuthViewModel = hiltViewModel() // <--- add this
 ) {
 
     val context = LocalContext.current
@@ -191,12 +193,14 @@ fun ProfileScreen(
                         return@Button
                     }
                     viewModel.updateProfile(
+                        authViewModel = authViewModel,
                         onSuccess = {
                             Toast.makeText(
                                 context,
                                 "Profile updated successfully",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            navController.navigate(Routes.DASHBOARD)
                         },
                         onError = {
                             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()

@@ -5,13 +5,13 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todoapp.data.repository.ProfileRepository
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val repository: ProfileRepository,
-//    private val authViewModel: AuthViewModel
 ) : ViewModel() {
 
     var name by mutableStateOf("")
@@ -32,9 +32,10 @@ class ProfileViewModel @Inject constructor(
 
     private fun loadProfile() {
         viewModelScope.launch {
+            val firebaseUser = FirebaseAuth.getInstance().currentUser
             val user = repository.getProfile()
             name = user.name
-            email = user.email
+            email = firebaseUser?.email ?: user.email
             phone = user.phone ?: ""
             photoUrl = user.photoUrl
         }
@@ -67,6 +68,7 @@ class ProfileViewModel @Inject constructor(
 //    }
 
     fun updateProfile(
+        authViewModel: AuthViewModel, // pass AuthViewModel
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
@@ -75,8 +77,8 @@ class ProfileViewModel @Inject constructor(
                 isLoading = true
                 repository.updateProfile(name, phone, photoUrl)
 
-                // 🔥 Update global state
-//                authViewModel.updateUser(name, photoUrl)
+//                 🔥 Update global state
+                authViewModel.updateUser(name,phone, photoUrl)
 
                 onSuccess()
             } catch (e: Exception) {

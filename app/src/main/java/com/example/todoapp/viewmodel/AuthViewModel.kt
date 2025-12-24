@@ -4,8 +4,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.todoapp.data.repository.AuthRepository
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 @HiltViewModel
@@ -95,21 +100,36 @@ class AuthViewModel @Inject constructor(
             onError("Invalid OTP")
         }
     }
-    // AuthViewModel.kt
 
     val userEmail: String?
         get() = authRepository.getUserEmail()
 
-        val userName: String
-        get() = authRepository.getUserName()
-//    var userName by mutableStateOf("")
-//        private set
-//
-//    var userPhoto by mutableStateOf<String?>(null)
-//        private set
-//
-//    fun updateUser(name: String, photo: String?) {
-//        userName = name
-//        userPhoto = photo
-//    }
+    var userName by mutableStateOf(FirebaseAuth.getInstance().currentUser?.displayName ?: "User")
+        private set
+
+    var userMobile by mutableStateOf(FirebaseAuth.getInstance().currentUser?.phoneNumber ?: "")
+        private set
+
+    init {
+        viewModelScope.launch {
+            val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return@launch
+            val snapshot = FirebaseFirestore.getInstance()
+                .collection("users")
+                .document(uid)
+                .get()
+                .await()
+            userName = snapshot.getString("name") ?: userName
+            userMobile = snapshot.getString("phone") ?: userMobile
+        }
+    }
+
+
+    var userPhoto by mutableStateOf<String?>(null)
+        private set
+
+    fun updateUser(name: String, phone: String, photo: String?) {
+        userName = name
+        userMobile = phone
+        userPhoto = photo
+    }
 }

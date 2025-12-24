@@ -137,7 +137,7 @@ fun SignupScreen(
                                     "Account created successfully",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                navController.navigate(Routes.TODO_LIST) {
+                                navController.navigate(Routes.DASHBOARD) {
                                     popUpTo(Routes.SIGNUP) { inclusive = true }
                                 }
                             },
