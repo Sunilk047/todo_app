@@ -7,24 +7,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavType
-import com.example.todoapp.data.repository.AuthRepository
 import com.example.todoapp.ui.auth.*
 import com.example.todoapp.ui.profile.ProfileScreen
 import com.example.todoapp.ui.todo.*
-import dagger.hilt.EntryPoint
-import dagger.hilt.InstallIn
-import dagger.hilt.android.EntryPointAccessors
-import dagger.hilt.components.SingletonComponent
 
-///** Hilt EntryPoint to access AuthRepository inside composables */
-//@EntryPoint
-//@InstallIn(SingletonComponent::class)
-//interface AuthRepoEntryPoint {
-//    fun authRepository(): AuthRepository
-//}
-//@OptIn(ExperimentalAnimationApi::class)
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AppNavGraph() {
@@ -74,21 +60,6 @@ fun AppNavGraph() {
         composable(Routes.DASHBOARD) {
             DashboardScreen(navController)
         }
-//        composable(Routes.TODO_LIST) {
-//            TodoListScreen(navController)
-//        }
-
-//        composable(
-//            route = "otpVerify/{email}",
-//            arguments = listOf(navArgument("email") {
-//                type = NavType.StringType
-//            })
-//        ) { backStackEntry ->
-//            OtpVerifyScreen(
-//                navController = navController,
-//                email = backStackEntry.arguments?.getString("email")!!
-//            )
-//        }
 
         composable(
             route = "${Routes.ADD_EDIT}?todoId={todoId}",
@@ -105,13 +76,5 @@ fun AppNavGraph() {
                 todoId = todoId
             )
         }
-
-
-//        composable(
-//            "${Routes.ADD_EDIT}?todoId={todoId}",
-//            arguments = listOf(navArgument("todoId") { nullable = true })
-//        ) {
-//            AddEditToDoScreen(navController)
-//        }
     }
 }

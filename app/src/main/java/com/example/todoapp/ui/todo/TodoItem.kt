@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.example.todoapp.data.model.Todo
+import com.example.todoapp.ui.theme.bluePrimary
 
 @Composable
 fun TodoItem(
@@ -99,7 +100,7 @@ fun TodoItem(
             /* -------- Actions -------- */
 
             IconButton(onClick = onEdit) {
-                Icon(Icons.Default.Edit, contentDescription = "Edit")
+                Icon(Icons.Default.Edit, contentDescription = "Edit", tint = bluePrimary)
             }
 
             IconButton(onClick = onDelete) {
