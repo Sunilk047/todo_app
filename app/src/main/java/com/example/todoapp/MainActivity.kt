@@ -1,17 +1,18 @@
 package com.example.todoapp
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import dagger.hilt.android.AndroidEntryPoint
 import com.example.todoapp.ui.navigation.AppNavGraph
 import com.example.todoapp.ui.theme.ToDoAppTheme
+import androidx.fragment.app.FragmentActivity
 
-@AndroidEntryPoint   // ✅ THIS WAS MISSING
-class MainActivity : ComponentActivity() {
+@AndroidEntryPoint
+class MainActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             ToDoAppTheme {
                 AppNavGraph()
@@ -19,3 +20,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+

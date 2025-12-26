@@ -9,4 +9,6 @@ object Routes {
     const val TODO_LIST = "todo_list"
     const val DASHBOARD = "dashboard"
     const val ADD_EDIT = "add_edit"
+    const val PIN = "pin"
+    const val UNLOCK = "unlock"
 }

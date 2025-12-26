@@ -21,11 +21,13 @@ import com.example.todoapp.ui.theme.bluePrimary
 import com.example.todoapp.ui.theme.blueSecondary
 import com.example.todoapp.ui.theme.white
 import com.example.todoapp.viewmodel.AuthViewModel
+import com.example.todoapp.viewmodel.TodoViewModel
 
 @Composable
 fun AppDrawer(
     navController: NavController,
-    viewModel: AuthViewModel = hiltViewModel()
+    viewModel: AuthViewModel = hiltViewModel(),
+    todoViewModel: TodoViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
 
@@ -112,6 +114,7 @@ fun AppDrawer(
                 icon = { Icon(Icons.Default.ExitToApp, null) },
                 selected = false,
                 onClick = {
+                    todoViewModel.clearOnLogout()
                     viewModel.logout()
                     Toast.makeText(
                         context,
@@ -120,7 +123,10 @@ fun AppDrawer(
                     ).show()
 
                     navController.navigate(Routes.LOGIN) {
-                        popUpTo(0) { inclusive = true }
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
                     }
                 }
             )

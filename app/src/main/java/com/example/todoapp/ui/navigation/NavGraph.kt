@@ -1,6 +1,5 @@
 package com.example.todoapp.ui.navigation
 
-import SplashScreen
 import androidx.compose.animation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -9,6 +8,7 @@ import androidx.navigation.navArgument
 import androidx.compose.runtime.Composable
 import com.example.todoapp.ui.auth.*
 import com.example.todoapp.ui.profile.ProfileScreen
+import com.example.todoapp.ui.splash.SplashScreen
 import com.example.todoapp.ui.todo.*
 
 @OptIn(ExperimentalAnimationApi::class)

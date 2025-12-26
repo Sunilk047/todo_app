@@ -185,7 +185,7 @@ fun DashboardScreen(
                                     todoViewModel.deleteTodo(todo.id)
                                 },
                                 onToggleStatus = {
-                                    todoViewModel.toggle(todo)
+//                                    todoViewModel.toggle(todo)
                                 }
                             )
 
